@@ -543,15 +543,17 @@ def print_all_documents_to_stdout(document_list):
         else:
             print(f'Тип сортировки "{sort_type}" не поддерживается. Вывод отсортирован во возрастанию (значение по умолчанию)')
 
-    for document in sorted(document_list, reverse=reverse_type, key=lambda item: item.get(sort_key).lower()):
+    sorted_document_list = sorted(document_list, reverse=reverse_type, key=lambda item: item.get(sort_key).lower())
+    for document in sorted_document_list:
         print(f'{document.get("type")} "{document.get("number")}" "{document.get("name")}"')
+    return sorted_document_list
 
 
 def add_document(document_list, directories_dict):
     """Функция принимает на вход список документов (каталог) и словарь (номера полок с номерами документов).
     Функция добавляет новый документ в каталог и на полку, только если номер документа уникальный и существует
     полка с заданным номером.
-    Функция возвращает None"""
+    """
 
     doc_type = doc_number = doc_name = None
     try:
@@ -579,6 +581,7 @@ def add_document(document_list, directories_dict):
         else:
             print('Документ не создан, т.к. документ с таким номером уже есть в каталоге. '
                   'Номер документа должен быть уникальным!')
+    return document_list, directories_dict
 
 
 def get_doc_index_by_doc_number(document_list, document_number):
@@ -689,6 +692,10 @@ def main():
         else:
             print('Такой команды нет! Чтобы вывести список доступных команд, введите "help"')
             continue
+
+
+def summa(a, b):
+    return a + b
 
 
 if __name__ == "__main__":
